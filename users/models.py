@@ -8,6 +8,8 @@ from .managers import CustomUserManager
 class User(AbstractUser):
     username = None
     email = models.EmailField('email address', unique=True)
+    first_name = models.CharField(max_length=50, blank=False)
+    last_name = models.CharField(max_length=50, blank=False)
     PRN = models.CharField('Permanent Registration Number',
                            max_length=10, unique=True, blank=False)
     year = models.IntegerField('year studying ex: 1 - first year',
