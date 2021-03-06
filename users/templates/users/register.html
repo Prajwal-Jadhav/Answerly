@@ -8,6 +8,8 @@
 </head>
 <body>
   <form method="POST" action="{% url 'register' %}">
+    {% csrf_token %}
+
     {{ form }}
 
     <button type="submit">Sign up</button>
