@@ -1,3 +1,5 @@
+{% load crispy_forms_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,10 +11,8 @@
 <body>
   <form method="POST" action="{% url 'register' %}">
     {% csrf_token %}
-    <legend>Register today</legend>
-    <fieldset>
-      {{ form }}
-    </fieldset>
+    
+      {{ form|crispy }}
     
     <button type="submit">Sign up</button>
   </form>
