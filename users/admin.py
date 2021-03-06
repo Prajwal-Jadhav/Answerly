@@ -10,7 +10,7 @@ class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
     model = User
     list_display = ('email', 'first_name', 'last_name', 'PRN',
-                    'year', 'branch', 'division', 'is_staff', 'is_active')
+                    'year', 'branch', 'division', 'is_staff', 'is_active', 'date_joined')
     list_filter = ('email', 'first_name', 'last_name', 'PRN', 'year', 'branch', 'division',
                    'is_staff', 'is_active')
 
