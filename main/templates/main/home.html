@@ -1,4 +1,10 @@
 {% extends 'main/base.html' %}
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'main/home.css' %}">
+{% endblock stylesheets %}
+
 {% block content%}
 
 <div class="welcome_header">
