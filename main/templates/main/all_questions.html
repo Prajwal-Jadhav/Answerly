@@ -10,7 +10,9 @@
     <h2>Questions</h2>
 
     {% for question in question_list %}
-    <a href="#">{{question.title}}</a>
+    <a href="{% url 'main:question_details' question.id %}"
+      >{{question.title}}</a
+    >
     {% endfor %}
   </body>
 </html>
