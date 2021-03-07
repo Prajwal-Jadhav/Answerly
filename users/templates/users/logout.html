@@ -4,15 +4,19 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <title>Log out</title>
 </head>
 <body>
-  <h2>You have been logged out</h2> 
+  <div class="container w-50">
+    <h2>You have been logged out</h2> 
 
     <div class="border-top pt-3">
-        <small class="text-muted">
-            <a href="{% url 'login' %}" >Log in again</a>
-        </small>
+      <small class="text-muted">
+          <a href="{% url 'login' %}" >Log in again</a>
+      </small>
     </div>
+    
+  </div>
 </body>
 </html>
