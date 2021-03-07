@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -16,10 +18,12 @@
       crossorigin="anonymous"
     />
 
+    <link rel="stylesheet" href="{% static 'main/base.css' %}">
+
     <!-- Custom CSS files to be added by the inheriting template -->
     {% block stylesheets %}
     {% endblock stylesheets %}
-    
+
   </head>
 
   <body>
