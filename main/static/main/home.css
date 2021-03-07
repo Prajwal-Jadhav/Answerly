@@ -2,3 +2,13 @@
   text-align: center;
   margin-top: 15px;
 }
+
+.questions_container {
+  width: 800px;
+  margin: 30px auto;
+  border: 2px solid black;
+}
+
+.question__title {
+  font-size: 18px;
+}

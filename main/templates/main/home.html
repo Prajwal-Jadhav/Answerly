@@ -12,8 +12,17 @@
   <h2>To the home page of Answerly</h2>
 </div>
 
-{% for question in question_list %}
-<a href="{% url 'main:question_details' question.id %}">{{question.title}}</a>
-{% endfor %}
+<div class="questions_container">
+  {% for question in question_list %}
+  <div class="question">
+    <p class="question__votes">{{ question.votes }} votes</p>
+    <a class="question__title" href="{% url 'main:question_details' question.id %}">
+      {{question.title}}
+    </a>
+    <p class="question__time">asked at - {{ question.created_at }}</p>
+    <p class="question__author"> by {{ question.asked_by.first_name }}</p>
+  </div>
+  {% endfor %}
+</div>
 
 {% endblock content%}
