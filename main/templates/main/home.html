@@ -1,8 +1,10 @@
 {% extends 'main/base.html' %}
 {% block content%}
 
-<h1>Welcome</h1>
-<h2>This is the home page</h2>
+<div class="welcome_header">
+  <h1>Welcome</h1>
+  <h2>To the home page of Answerly</h2>
+</div>
 
 {% for question in question_list %}
 <a href="{% url 'main:question_details' question.id %}">{{question.title}}</a>
