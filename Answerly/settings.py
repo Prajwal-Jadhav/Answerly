@@ -30,6 +30,9 @@ ALLOWED_HOSTS = []
 # setting for custom user model
 AUTH_USER_MODEL = 'users.User'
 
+# redirect url when user logs in but next field is not provided
+LOGIN_REDIRECT_URL = '/'
+
 # Application definition
 
 INSTALLED_APPS = [
