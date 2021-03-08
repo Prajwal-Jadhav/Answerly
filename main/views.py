@@ -44,3 +44,23 @@ def create_question(request):
         form = QuestionCreationForm()
 
     return render(request, 'main/create_question.html', {'form': form})
+
+
+@login_required
+def create_answer(request, question_id):
+    if request.method == 'POST':
+        form = AnswerCreationForm(request.POST)
+        try:
+            question = Question.objects.get(pk=question_id)
+        except Question.DoesNotExist:
+            raise Http404(
+                'The question you are trying to answer does not exists.')
+
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.answered_by = request.user
+            answer.question = question
+            answer.save()
+            return redirect(reverse('main:question_details', args=[question_id]))
+
+    return redirect(reverse('main:question_details', args=[question_id]))
