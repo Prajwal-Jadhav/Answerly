@@ -17,7 +17,7 @@ class Question(models.Model):
     votes = models.IntegerField('number of votes cast', default=0)
 
     def __str__(self) -> str:
-        return self.title[:10] + "..."
+        return self.title[:60]
 
 
 class Answer(models.Model):
@@ -35,4 +35,4 @@ class Answer(models.Model):
     votes = models.IntegerField()
 
     def __str__(self) -> str:
-        return self.content[:10] + "..."
+        return self.content[:60]
