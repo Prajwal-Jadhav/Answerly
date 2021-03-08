@@ -1,0 +1,1 @@
+var easyMDE = new EasyMDE({ element: document.querySelector('.textarea') });
