@@ -37,6 +37,10 @@ LOGIN_REDIRECT_URL = '/'
 # when user tries to access a page that requires user to be logged in
 LOGIN_URL = '/login'
 
+# where to redirect after user is logged out
+# this makes logout.html template redundant
+LOGOUT_REDIRECT_URL = '/'
+
 # Application definition
 
 INSTALLED_APPS = [
