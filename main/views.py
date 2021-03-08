@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
-from .models import Question
+from .models import Answer, Question
 from main.forms import AnswerCreationForm, QuestionCreationForm
 
 
@@ -22,12 +22,13 @@ def all_questions(request):
 def question_details(request, question_id):
     try:
         question = Question.objects.get(pk=question_id)
+        answers = question.answer_set.all()
     except Question.DoesNotExist:
         raise Http404('question does not exists.')
 
     form = AnswerCreationForm()
 
-    return render(request, 'main/question_details.html', {'question': question, 'form': form})
+    return render(request, 'main/question_details.html', {'question': question, 'answers': answers, 'form': form})
 
 
 @login_required
