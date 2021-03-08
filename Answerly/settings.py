@@ -33,6 +33,10 @@ AUTH_USER_MODEL = 'users.User'
 # redirect url when user logs in but next field is not provided
 LOGIN_REDIRECT_URL = '/'
 
+# login_required decorator uses this to redirect not logged in users to login page
+# when user tries to access a page that requires user to be logged in
+LOGIN_URL = '/login'
+
 # Application definition
 
 INSTALLED_APPS = [
