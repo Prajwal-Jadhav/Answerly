@@ -14,7 +14,7 @@ class Question(models.Model):
         'more information about question', blank=True, default='')
     asked_by = models.ForeignKey(to=get_user_model(), on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now, blank=True)
-    votes = models.IntegerField('number of votes cast')
+    votes = models.IntegerField('number of votes cast', default=0)
 
     def __str__(self) -> str:
         return self.title[:10] + "..."
