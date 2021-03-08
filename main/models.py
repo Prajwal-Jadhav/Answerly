@@ -32,7 +32,7 @@ class Answer(models.Model):
     answered_by = models.ForeignKey(
         to=get_user_model(), on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
-    votes = models.IntegerField()
+    votes = models.IntegerField(default=0)
 
     def __str__(self) -> str:
         return self.content[:60]
