@@ -1,4 +1,4 @@
-from django.http.response import Http404
+from django.http.response import Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -35,8 +35,8 @@ def create_question(request):
         if form.is_valid():
             question = form.save(commit=False)
             question.asked_by = request.user
-            question = question.save()
-            redirect(reverse('main:question_details', args=[question.id]))
+            question.save()
+            return redirect(reverse('main:question_details', args=[question.id]))
     else:
         form = QuestionCreationForm()
 
