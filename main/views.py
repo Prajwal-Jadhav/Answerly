@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
 from .models import Question
-from main.forms import QuestionCreationForm
+from main.forms import AnswerCreationForm, QuestionCreationForm
 
 
 def home(request):
@@ -25,7 +25,9 @@ def question_details(request, question_id):
     except Question.DoesNotExist:
         raise Http404('question does not exists.')
 
-    return render(request, 'main/question_details.html', {'question': question})
+    form = AnswerCreationForm()
+
+    return render(request, 'main/question_details.html', {'question': question, 'form': form})
 
 
 @login_required
