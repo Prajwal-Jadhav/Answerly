@@ -23,7 +23,7 @@
 
 {% endif%}
 
-<form action="#">
+<form action="{% url 'main:create_answer' question.id %}" method="POST">
   {% csrf_token %}
 
   {{ form | crispy }}
