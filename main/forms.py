@@ -13,4 +13,4 @@ class QuestionCreationForm(ModelForm):
 class AnswerCreationForm(ModelForm):
     class Meta:
         model = Answer
-        exclude = ('answered_by', 'created_at', 'votes')
+        exclude = ('question', 'answered_by', 'created_at', 'votes')
