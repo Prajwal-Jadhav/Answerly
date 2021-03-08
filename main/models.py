@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from datetime import datetime
+from django.utils import timezone
 
 
 class Question(models.Model):
@@ -13,7 +13,7 @@ class Question(models.Model):
     content = models.TextField(
         'more information about question', blank=True, default='')
     asked_by = models.ForeignKey(to=get_user_model(), on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=datetime.now, blank=True)
+    created_at = models.DateTimeField(default=timezone.now, blank=True)
     votes = models.IntegerField('number of votes cast', default=0)
 
     def __str__(self) -> str:
@@ -31,7 +31,7 @@ class Answer(models.Model):
     question = models.ForeignKey(to=Question, on_delete=models.CASCADE)
     answered_by = models.ForeignKey(
         to=get_user_model(), on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=datetime.now, blank=True)
+    created_at = models.DateTimeField(default=timezone.now, blank=True)
     votes = models.IntegerField()
 
     def __str__(self) -> str:
