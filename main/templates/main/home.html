@@ -8,8 +8,10 @@
 {% block content%}
 
 <div class="welcome_header">
-  <h1>Welcome</h1>
-  <h2>To the home page of Answerly</h2>
+  <h2>Explore Answerly</h2>
+  <a href="{% url 'main:create_question' %}">
+    <button>Ask Qustion</button>
+  </a>
 </div>
 
 <div class="questions_container">
