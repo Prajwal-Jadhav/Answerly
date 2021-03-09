@@ -1,6 +1,24 @@
 .welcome_header {
-  text-align: center;
-  margin-top: 15px;
+  margin: 20px auto 10px auto;
+  display: flex;
+  justify-content: space-between;
+  width: 900px;
+}
+
+.welcome_header__button {
+  align-self: center;
+  display: inline-block;
+  padding: 6px;
+  border-radius: 4px;
+  background-color: #0f3559;
+  color: white;
+  text-decoration: none;
+}
+
+.welcome_header__button:hover {
+  text-decoration: none;
+  background-color: #124a7e;
+  color: white;
 }
 
 .questions_container {
