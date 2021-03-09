@@ -19,8 +19,14 @@
   {% for question in question_list %}
   <div class="question">
     <div class="question__votes_container">
-      <div class="question__votes">{{ question.votes }} votes</div>
-      <div class="question__answers">{{ question.answer_set.all.count }} answers</div>
+      <div class="question__votes">
+        <div class="question__votes--number">{{ question.votes }}</div>
+        <div class="question__votes--text">votes</div>
+      </div>
+      <div class="question__answers">
+        <div class="question__answers--number">{{ question.answer_set.all.count }}</div>
+        <div class="question__answers--text">answers</div>
+      </div>
     </div>
     <div class="question__summary">
       <a class="question__title" href="{% url 'main:question_details' question.id %}">

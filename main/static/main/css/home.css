@@ -4,11 +4,46 @@
 }
 
 .questions_container {
-  width: 800px;
+  width: 900px;
   margin: 30px auto;
-  border: 2px solid black;
+  border: 1px solid gainsboro;
+}
+
+.question {
+  display: flex;
+  padding: 8px;
+  border-bottom: 1px solid gainsboro;
+}
+
+.question__votes_container {
+  display: flex;
+}
+
+.question__votes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.question__answers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.question__summary {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 15px;
+  width: 100%;
 }
 
 .question__title {
   font-size: 18px;
+}
+
+.question__time_and_author {
+  align-self: flex-end;
 }
