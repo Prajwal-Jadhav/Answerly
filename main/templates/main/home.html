@@ -18,6 +18,7 @@
   {% for question in question_list %}
   <div class="question">
     <p class="question__votes">{{ question.votes }} votes</p>
+    <p class="question__answers">{{ question.answer_set.all.count }} answers</p>
     <a class="question__title" href="{% url 'main:question_details' question.id %}">
       {{question.title}}
     </a>
