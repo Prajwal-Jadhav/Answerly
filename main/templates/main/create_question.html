@@ -2,14 +2,20 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'main/css/create_question.css' %}">
+{% endblock stylesheets %}
+
 {% block content %}
-<form action="{% url 'main:create_question' %}" method="POST">
-  {% csrf_token %}
+<div class="form_block">
+  <form action="{% url 'main:create_question' %}" method="POST">
+    {% csrf_token %}
 
-  {{ form | crispy}}
+    {{ form | crispy}}
 
-  <button class="btn btn-primary" type="submit">Create question</button>
-</form>
+    <button class="btn btn-primary" type="submit">Create question</button>
+  </form>
+</div>
 {% endblock content%}
 
 {% block javascript %}
