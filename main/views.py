@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from .models import Answer, Question
 from main.forms import AnswerCreationForm, QuestionCreationForm
+import markdown2
 
 
 def home(request):
@@ -36,8 +37,11 @@ def create_question(request):
     if request.method == 'POST':
         form = QuestionCreationForm(request.POST)
         if form.is_valid():
+            question_content = form.cleaned_data['content']
+            content_in_html = markdown2.markdown(question_content)
             question = form.save(commit=False)
             question.asked_by = request.user
+            question.content = content_in_html
             question.save()
             return redirect(reverse('main:question_details', args=[question.id]))
     else:

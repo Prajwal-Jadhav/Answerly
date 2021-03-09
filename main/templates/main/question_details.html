@@ -6,7 +6,7 @@
 
 <div>
   <h3>{{ question.title }}</h3>
-  <p>{{ question.content }}</p>
+  {{ question.content | safe }}
   <p>{{ question.created_at }}</p>
 </div>
 
@@ -16,7 +16,7 @@
 
 {% for answer in answers %}
 <p> {{ answer.votes}} votes</p>
-<p> {{ answer.content }}</p>
+{{ answer.content | safe }}
 <p> {{ answer.answered_by }} </p>
 <small> {{answer.created_at }} </small>
 {% endfor %}
