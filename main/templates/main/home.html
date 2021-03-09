@@ -11,20 +11,25 @@
 <div class="welcome_header">
   <h2>Explore Answerly</h2>
   <a href="{% url 'main:create_question' %}">
-    <button>Ask Qustion</button>
+    <button class="welcome_header__button">Ask Qustion</button>
   </a>
 </div>
 
 <div class="questions_container">
   {% for question in question_list %}
   <div class="question">
-    <p class="question__votes">{{ question.votes }} votes</p>
-    <p class="question__answers">{{ question.answer_set.all.count }} answers</p>
-    <a class="question__title" href="{% url 'main:question_details' question.id %}">
-      {{question.title}}
-    </a>
-    <p class="question__time">asked - {{ question.created_at | naturaltime }}</p>
-    <p class="question__author"> by {{ question.asked_by.first_name }}</p>
+    <div class="question__votes_container">
+      <div class="question__votes">{{ question.votes }} votes</div>
+      <div class="question__answers">{{ question.answer_set.all.count }} answers</div>
+    </div>
+    <div class="question__summary">
+      <a class="question__title" href="{% url 'main:question_details' question.id %}">
+        {{question.title}}
+      </a>
+      <div class="question__time_and_author">
+        asked by {{ question.asked_by.first_name }} {{ question.created_at | naturaltime }}
+      </div>
+    </div>
   </div>
   {% endfor %}
 </div>
