@@ -22,11 +22,8 @@ def all_questions(request):
 
 
 def question_details(request, question_id):
-    try:
-        question = Question.objects.get(pk=question_id)
-        answers = question.answer_set.all()
-    except Question.DoesNotExist:
-        raise Http404('question does not exists.')
+    question = get_object_or_404(Question, pk=question_id)
+    answers = question.answer_set.all()
 
     form = AnswerCreationForm()
 
@@ -56,11 +53,8 @@ def create_question(request):
 def create_answer(request, question_id):
     if request.method == 'POST':
         form = AnswerCreationForm(request.POST)
-        try:
-            question = Question.objects.get(pk=question_id)
-        except Question.DoesNotExist:
-            raise Http404(
-                'The question you are trying to answer does not exists.')
+
+        question = get_object_or_404(Question, pk=question_id)
 
         if form.is_valid():
             answer = form.save(commit=False)
@@ -74,10 +68,7 @@ def create_answer(request, question_id):
 
 @login_required
 def delete_question(request, question_id):
-    try:
-        question = Question.objects.get(pk=question_id)
-    except Question.DoesNotExist:
-        raise Http404('The question you are trying to answer does not exists.')
+    question = get_object_or_404(Question, pk=question_id)
 
     if question.asked_by == request.user:
         question.delete()
@@ -91,11 +82,9 @@ def delete_question(request, question_id):
 
 @login_required
 def delete_answer(request, question_id, answer_id):
-    try:
-        answer = Answer.objects.get(pk=answer_id)
-    except Answer.DoesNotExist:
-        raise Http404('The answer you are trying to delete does not exist')
+    answer = get_object_or_404(Answer, pk=answer_id)
 
+    # check only user who wrote above answer is sending request
     if answer.answered_by == request.user:
         answer.delete()
         messages.success(request, 'Answer was successfully deleted.')
