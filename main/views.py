@@ -2,6 +2,7 @@ from django.http.response import Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.contrib import messages
 
 from .models import Answer, Question
 from main.forms import AnswerCreationForm, QuestionCreationForm
@@ -68,3 +69,20 @@ def create_answer(request, question_id):
             return redirect(reverse('main:question_details', args=[question_id]))
 
     return redirect(reverse('main:question_details', args=[question_id]))
+
+
+@login_required
+def delete_question(request, question_id):
+    try:
+        question = Question.objects.get(pk=question_id)
+    except Question.DoesNotExist:
+        raise Http404('The question you are trying to answer does not exists.')
+
+    if question.asked_by == request.user:
+        question.delete()
+        messages.success(request, 'Question was successfully deleted.')
+    else:
+        messages.error(
+            request, "You don't have permissions to delete that question")
+
+    return redirect(reverse('main:home'))
