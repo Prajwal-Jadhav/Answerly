@@ -9,25 +9,26 @@
   {{ question.content | safe }}
   <p>{{ question.created_at }}</p>
   <p>asked by {{ question.asked_by.get_full_name }}</p>
+
   {% if user.is_authenticated and user == question.asked_by %}
-  <a href="{% url 'main:delete_question' question.id %}">Delete</a>
+    <a href="{% url 'main:delete_question' question.id %}">Delete</a>
   {% endif %}
 </div>
 
 {% if not answers %}
-<p>There are no answers to this question yet. </p>
+    <p>There are no answers to this question yet. </p>
 {% else %}
+  {% for answer in answers %}
+    <p> {{ answer.votes}} votes</p>
+    {{ answer.content | safe }}
+    <p> {{ answer.answered_by.get_full_name }} </p>
+    <small> {{answer.created_at }} </small>
 
-{% for answer in answers %}
-<p> {{ answer.votes}} votes</p>
-{{ answer.content | safe }}
-<p> {{ answer.answered_by.get_full_name }} </p>
-<small> {{answer.created_at }} </small>
-{% if user.is_authenticated and user == answer.answered_by %}
-<a href="{% url 'main:delete_answer' question.id answer.id %}">Delete</a>
-{% endif %}
-{% endfor %}
-
+    {% if user.is_authenticated and user == answer.answered_by %}
+      <a href="{% url 'main:delete_answer' question.id answer.id %}">Delete</a>
+    {% endif %}
+    
+  {% endfor %}
 {% endif%}
 
 <form action="{% url 'main:create_answer' question.id %}" method="POST">
