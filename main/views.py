@@ -158,4 +158,4 @@ def edit_answer(request, question_id, answer_id):
     form = AnswerCreationForm(
         initial={'content': answer.content_markdown}, instance=answer)
 
-    return render(request, 'main/edit_answer.html', {'form': form})
+    return render(request, 'main/edit_answer.html', {'form': form, 'question_id': question_id,  'answer_id': answer_id})
