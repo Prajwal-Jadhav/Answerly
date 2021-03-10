@@ -1,5 +1,5 @@
 from django.http.response import Http404, HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib import messages
@@ -103,3 +103,16 @@ def delete_answer(request, question_id, answer_id):
         messages.error(
             request, "You don't have permissions to delete that answer.")
         return redirect(reverse('main:home'))
+
+
+@login_required
+def edit_question(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+    if request.method == 'POST':
+        form = QuestionCreationForm(request.POST, instance=question)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('main:question_details', args=[question_id]))
+
+    form = QuestionCreationForm(instance=question)
+    return render(request, 'main/edit_question.html', {'form': form, 'question': question})
