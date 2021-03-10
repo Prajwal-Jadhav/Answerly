@@ -12,7 +12,7 @@ class Question(models.Model):
     title = models.CharField('title for question', max_length=150, blank=False)
     content = models.TextField(
         'more information about question', blank=True, default='')
-    content_markdown = models.TextField(null=True)
+    content_markdown = models.TextField(null=True, default='')
     asked_by = models.ForeignKey(to=get_user_model(), on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
     votes = models.IntegerField('number of votes cast', default=0)
