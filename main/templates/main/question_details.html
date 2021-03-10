@@ -9,6 +9,9 @@
   {{ question.content | safe }}
   <p>{{ question.created_at }}</p>
   <p>asked by {{ question.asked_by.first_name }}</p>
+  {% if user.is_authenticated and user == question.asked_by %}
+  <a href="{% url 'main:delete_question' question.id %}">Delete</a>
+  {% endif %}
 </div>
 
 {% if not answers %}
