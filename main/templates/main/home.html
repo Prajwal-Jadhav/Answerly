@@ -33,7 +33,7 @@
         {{question.title}}
       </a>
       <div class="question__time_and_author">
-        asked by {{ question.asked_by.first_name }} {{ question.created_at | naturaltime }}
+        asked by {{ question.asked_by.get_full_name }} {{ question.created_at | naturaltime }}
       </div>
     </div>
   </div>

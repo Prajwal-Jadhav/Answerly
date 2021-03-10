@@ -8,7 +8,7 @@
   <h3>{{ question.title }}</h3>
   {{ question.content | safe }}
   <p>{{ question.created_at }}</p>
-  <p>asked by {{ question.asked_by.first_name }}</p>
+  <p>asked by {{ question.asked_by.get_full_name }}</p>
   {% if user.is_authenticated and user == question.asked_by %}
   <a href="{% url 'main:delete_question' question.id %}">Delete</a>
   {% endif %}
@@ -21,7 +21,7 @@
 {% for answer in answers %}
 <p> {{ answer.votes}} votes</p>
 {{ answer.content | safe }}
-<p> {{ answer.answered_by }} </p>
+<p> {{ answer.answered_by.get_full_name }} </p>
 <small> {{answer.created_at }} </small>
 {% endfor %}
 
