@@ -11,6 +11,7 @@
   <p>asked by {{ question.asked_by.get_full_name }}</p>
 
   {% if user.is_authenticated and user == question.asked_by %}
+    <a href="{% url 'main:edit_question' question.id %}">Edit</a>
     <a href="{% url 'main:delete_question' question.id %}">Delete</a>
   {% endif %}
 </div>
@@ -27,7 +28,7 @@
     {% if user.is_authenticated and user == answer.answered_by %}
       <a href="{% url 'main:delete_answer' question.id answer.id %}">Delete</a>
     {% endif %}
-    
+
   {% endfor %}
 {% endif%}
 
