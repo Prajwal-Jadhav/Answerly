@@ -29,6 +29,7 @@ class Answer(models.Model):
     """
 
     content = models.TextField(blank=False)
+    content_markdown = models.TextField(null=True, default='')
     question = models.ForeignKey(to=Question, on_delete=models.CASCADE)
     answered_by = models.ForeignKey(
         to=get_user_model(), on_delete=models.CASCADE)
