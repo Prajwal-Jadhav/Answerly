@@ -43,6 +43,7 @@ def create_question(request):
             question = form.save(commit=False)
             question.asked_by = request.user
             question.content = content_in_html
+            question.content_markdown = question_content
             question.save()
             return redirect(reverse('main:question_details', args=[question.id]))
     else:
