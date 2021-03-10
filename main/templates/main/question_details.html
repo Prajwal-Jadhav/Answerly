@@ -2,42 +2,43 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h1>Qustion details</h1>
+<div class="question_details_container">
+  <h1>Qustion details</h1>
 
-<div>
-  <h3>{{ question.title }}</h3>
-  {{ question.content | safe }}
-  <p>{{ question.created_at }}</p>
-  <p>asked by {{ question.asked_by.get_full_name }}</p>
+  <div>
+    <h3>{{ question.title }}</h3>
+    {{ question.content | safe }}
+    <p>{{ question.created_at }}</p>
+    <p>asked by {{ question.asked_by.get_full_name }}</p>
 
-  {% if user.is_authenticated and user == question.asked_by %}
-    <a href="{% url 'main:edit_question' question.id %}">Edit</a>
-    <a href="{% url 'main:delete_question' question.id %}">Delete</a>
-  {% endif %}
-</div>
-
-{% if not answers %}
-    <p>There are no answers to this question yet. </p>
-{% else %}
-  {% for answer in answers %}
-    <p> {{ answer.votes}} votes</p>
-    {{ answer.content | safe }}
-    <p> {{ answer.answered_by.get_full_name }} </p>
-    <small> {{answer.created_at }} </small>
-
-    {% if user.is_authenticated and user == answer.answered_by %}
-      <a href="{% url 'main:delete_answer' question.id answer.id %}">Delete</a>
+    {% if user.is_authenticated and user == question.asked_by %}
+      <a href="{% url 'main:edit_question' question.id %}">Edit</a>
+      <a href="{% url 'main:delete_question' question.id %}">Delete</a>
     {% endif %}
+  </div>
 
-  {% endfor %}
-{% endif%}
+  {% if not answers %}
+      <p>There are no answers to this question yet. </p>
+  {% else %}
+    {% for answer in answers %}
+      <p> {{ answer.votes}} votes</p>
+      {{ answer.content | safe }}
+      <p> {{ answer.answered_by.get_full_name }} </p>
+      <small> {{answer.created_at }} </small>
 
-<form action="{% url 'main:create_answer' question.id %}" method="POST">
-  {% csrf_token %}
+      {% if user.is_authenticated and user == answer.answered_by %}
+        <a href="{% url 'main:delete_answer' question.id answer.id %}">Delete</a>
+      {% endif %}
 
-  {{ form | crispy }}
+    {% endfor %}
+  {% endif%}
 
-  <button class="btn btn-primary" type="submit">Submit answer</button>
-</form>
+  <form action="{% url 'main:create_answer' question.id %}" method="POST">
+    {% csrf_token %}
 
+    {{ form | crispy }}
+
+    <button class="btn btn-primary" type="submit">Submit answer</button>
+  </form>
+</div>
 {% endblock content %}
