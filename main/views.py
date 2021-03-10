@@ -86,3 +86,20 @@ def delete_question(request, question_id):
             request, "You don't have permissions to delete that question")
 
     return redirect(reverse('main:home'))
+
+
+@login_required
+def delete_answer(request, question_id, answer_id):
+    try:
+        answer = Answer.objects.get(pk=answer_id)
+    except Answer.DoesNotExist:
+        raise Http404('The answer you are trying to delete does not exist')
+
+    if answer.answered_by == request.user:
+        answer.delete()
+        messages.success(request, 'Answer was successfully deleted.')
+        return redirect(reverse('main:question_details', args=[question_id]))
+    else:
+        messages.error(
+            request, "You don't have permissions to delete that answer.")
+        return redirect(reverse('main:home'))
