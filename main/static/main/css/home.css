@@ -1,5 +1,6 @@
 .welcome_header {
   margin: 20px auto 10px auto;
+  padding: 10px 20px 25px;
   display: flex;
   justify-content: space-between;
   width: 900px;
