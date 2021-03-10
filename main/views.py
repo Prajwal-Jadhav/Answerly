@@ -112,8 +112,15 @@ def edit_question(request, question_id):
     if request.method == 'POST':
         form = QuestionCreationForm(request.POST, instance=question)
         if form.is_valid():
-            form.save()
+            question_content_in_markdown = form.cleaned_data['content']
+            question = form.save(commit=False)
+            question_content_in_html = markdown2.markdown(
+                question_content_in_markdown)
+            question.content = question_content_in_html
+            question.content_markdown = question_content_in_markdown
+            question.save()
             return redirect(reverse('main:question_details', args=[question_id]))
 
-    form = QuestionCreationForm(instance=question)
+    form = QuestionCreationForm(initial={
+                                'title': question.title, 'content': question.content_markdown}, instance=question)
     return render(request, 'main/edit_question.html', {'form': form, 'question': question})
