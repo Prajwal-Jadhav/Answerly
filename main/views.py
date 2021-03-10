@@ -109,6 +109,13 @@ def delete_answer(request, question_id, answer_id):
 @login_required
 def edit_question(request, question_id):
     question = get_object_or_404(Question, id=question_id)
+
+    # check only user who wrote above question is sending request
+    # if not then send unauthorized user to home route
+    if request.user != question.asked_by:
+        messages.error("You don't have permissions to edit this question.")
+        return redirect(reverse('main:home'))
+
     if request.method == 'POST':
         form = QuestionCreationForm(request.POST, instance=question)
         if form.is_valid():
