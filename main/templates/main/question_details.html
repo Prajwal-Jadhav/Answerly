@@ -8,6 +8,7 @@
   <h3>{{ question.title }}</h3>
   {{ question.content | safe }}
   <p>{{ question.created_at }}</p>
+  <p>asked by {{ question.asked_by.first_name }}</p>
 </div>
 
 {% if not answers %}
