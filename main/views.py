@@ -57,9 +57,21 @@ def create_answer(request, question_id):
         question = get_object_or_404(Question, pk=question_id)
 
         if form.is_valid():
+            # get content of answer in markdown sent by markdown in form
+            answer_content_in_markdown = form.cleaned_data['content']
+
+            # convert markdown to html
+            answer_content_in_html = markdown2.markdown(
+                answer_content_in_markdown)
+
             answer = form.save(commit=False)
             answer.answered_by = request.user
             answer.question = question
+
+            # save markdown in 'content_markdown' and html in 'content' fields
+            answer.content = answer_content_in_html
+            answer.content_markdown = answer_content_in_markdown
+
             answer.save()
             return redirect(reverse('main:question_details', args=[question_id]))
 
