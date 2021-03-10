@@ -13,5 +13,7 @@ urlpatterns = [
          views.create_answer, name='create_answer'),
     path('questions/<int:question_id>/delete',
          views.delete_question, name='delete_question'),
+    path('questions/<int:question_id>/answers/<int:answer_id>/delete',
+         views.delete_answer, name='delete_answer'),
     path('questions/new', views.create_question, name='create_question')
 ]
