@@ -132,3 +132,30 @@ def edit_question(request, question_id):
     form = QuestionCreationForm(initial={
                                 'title': question.title, 'content': question.content_markdown}, instance=question)
     return render(request, 'main/edit_question.html', {'form': form, 'question': question})
+
+
+@login_required
+def edit_answer(request, question_id, answer_id):
+    answer = get_object_or_404(Answer, pk=answer_id)
+
+    # check only valid user is sending request
+    if request.user != answer.answered_by:
+        messages.error("You don't have permissions to edit this answer.")
+        return redirect(reverse('main:home'))
+
+    if request.method == 'POST':
+        form = AnswerCreationForm(request.POST, instance=answer)
+        if form.is_valid():
+            answer_content_in_markdown = form.cleaned_data['content']
+            answer = form.save(commit=False)
+            answer_content_in_html = markdown2.markdown(
+                answer_content_in_markdown)
+            answer.content = answer_content_in_html
+            answer.content_markdown = answer_content_in_markdown
+            answer.save()
+            return redirect(reverse('main:question_details', args=[question_id]))
+
+    form = AnswerCreationForm(
+        initial={'content': answer.content_markdown}, instance=answer)
+
+    return render(request, 'main/edit_answer.html', {'form': form})
