@@ -26,6 +26,7 @@
       <small> {{answer.created_at }} </small>
 
       {% if user.is_authenticated and user == answer.answered_by %}
+        <a href="{% url 'main:edit_answer' question.id answer.id %}">Edit</a>
         <a href="{% url 'main:delete_answer' question.id answer.id %}">Delete</a>
       {% endif %}
 
