@@ -1,10 +1,11 @@
-from django.http.response import Http404, HttpResponseRedirect
+from django.contrib.auth import login
+from django.http.response import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib import messages
 
-from .models import Answer, Question
+from .models import Answer, Question, QuestionVote
 from main.forms import AnswerCreationForm, QuestionCreationForm
 import markdown2
 
@@ -159,3 +160,33 @@ def edit_answer(request, question_id, answer_id):
         initial={'content': answer.content_markdown}, instance=answer)
 
     return render(request, 'main/edit_answer.html', {'form': form, 'question_id': question_id,  'answer_id': answer_id})
+
+
+@login_required
+def vote_question(request, question_id, action):
+    question_vote = QuestionVote.objects.get(question__id=question_id)
+    upvoting_users = question_vote.users_upvoted.all()
+    downvoting_users = question_vote.users_downvoted.all()
+
+    if action == 'up':
+        if request.user in upvoting_users:
+            pass
+        elif request.user in downvoting_users:
+            question_vote.users_downvoted.remove(request.user)
+            question_vote.users_upvoted.add(request.user)
+        else:
+            question_vote.users_upvoted.add(request.user)
+    elif action == 'down':
+        if request.user in upvoting_users:
+            question_vote.users_upvoted.remove(request.user)
+            question_vote.users_downvoted.add(request.user)
+        elif request.user in downvoting_users:
+            pass
+        else:
+            question_vote.users_downvoted.add(request.user)
+
+    question_vote.votes = len(question_vote.users_upvoted.all(
+    )) - len(question_vote.users_downvoted.all())
+
+    question_vote.save()
+    return JsonResponse({"message": "Successfully voted"})
