@@ -2,6 +2,10 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
+{% block stylesheets %}
+  <link rel="stylesheet" href="{% static 'main/css/question_details.css' %}">
+{% endblock stylesheets%}
+
 {% block content %}
 <div class="question_details_container">
   <div>
