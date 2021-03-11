@@ -15,6 +15,8 @@ urlpatterns = [
          views.delete_question, name='delete_question'),
     path('questions/<int:question_id>/edit',
          views.edit_question, name='edit_question'),
+    path('question/<int:question_id>/vote/<str:action>',
+         views.vote_question, name='vote_question'),
     path('questions/<int:question_id>/answers/<int:answer_id>/delete',
          views.delete_answer, name='delete_answer'),
     path('questions/<int:question_id>/answers/<int:answer_id>/edit',
