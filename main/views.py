@@ -42,7 +42,11 @@ def create_question(request):
             question.asked_by = request.user
             question.content = content_in_html
             question.content_markdown = question_content
+
             question.save()
+
+            QuestionVote.objects.create(question=question)
+
             return redirect(reverse('main:question_details', args=[question.id]))
     else:
         form = QuestionCreationForm()
@@ -189,4 +193,7 @@ def vote_question(request, question_id, action):
     )) - len(question_vote.users_downvoted.all())
 
     question_vote.save()
+
+    print(question_vote.votes)
+    print(question_vote.users_downvoted.all())
     return JsonResponse({"message": "Successfully voted"})
