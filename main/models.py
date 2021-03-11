@@ -53,7 +53,10 @@ class QuestionVote(models.Model):
 
     question = models.OneToOneField(Question, on_delete=models.CASCADE)
     users_downvoted = models.ManyToManyField(
-        to=get_user_model(), related_name='downvotes')
+        to=get_user_model(), related_name='downvotes', blank=True)
     users_upvoted = models.ManyToManyField(
-        to=get_user_model(), related_name='upvotes')
+        to=get_user_model(), related_name='upvotes', blank=True)
     votes = models.IntegerField(default=0)
+
+    def __str__(self) -> str:
+        return f'{self.question} votes: {self.votes}'
