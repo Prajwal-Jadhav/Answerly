@@ -59,7 +59,8 @@ class QuestionVote(models.Model):
     votes = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
-        updated_votes = self.users_upvoted.count() - self.users_downvoted.count()
+        updated_votes = self.users_upvoted.all().count() - \
+            self.users_downvoted.all().count()
         self.votes = updated_votes
         super().save(*args, **kwargs)
 

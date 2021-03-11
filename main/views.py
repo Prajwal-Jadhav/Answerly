@@ -189,11 +189,6 @@ def vote_question(request, question_id, action):
         else:
             question_vote.users_downvoted.add(request.user)
 
-    question_vote.votes = len(question_vote.users_upvoted.all(
-    )) - len(question_vote.users_downvoted.all())
-
     question_vote.save()
 
-    print(question_vote.votes)
-    print(question_vote.users_downvoted.all())
     return JsonResponse({"message": "Successfully voted"})
