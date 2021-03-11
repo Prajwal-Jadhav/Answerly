@@ -1,1 +1,29 @@
+.question_details_container {
+  max-width: 1000px;
+  margin: 75px auto;
+  border: 1.5px solid gainsboro;
+  padding: 30px 35px 25px 35px;
+}
 
+.question_header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+
+.question_header__button {
+  align-self: center;
+  display: inline-block;
+  padding: 6px;
+  border-radius: 4px;
+  background-color: #0f3559;
+  color: white;
+  text-decoration: none;
+}
+
+.question_header__button:hover {
+  text-decoration: none;
+  background-color: #124a7e;
+  color: white;
+}

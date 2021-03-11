@@ -8,8 +8,12 @@
 
 {% block content %}
 <div class="question_details_container">
-  <div>
-    <h3>{{ question.title }}</h3>
+  <div class="question_info">
+    <div class="question_header">
+      <h3 class="question_title">{{ question.title }}</h3>
+      <a class="question_header__button" href="{% url 'main:create_question' %}">Ask Question</a>
+    </div>
+    <hr />
     {{ question.content | safe }}
     <p>{{ question.created_at }}</p>
     <p>asked by {{ question.asked_by.get_full_name }}</p>
