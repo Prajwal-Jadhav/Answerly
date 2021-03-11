@@ -8,20 +8,33 @@
 
 {% block content %}
 <div class="question_details_container">
-  <div class="question_info">
+  <div class="question">
     <div class="question_header">
       <h3 class="question_title">{{ question.title }}</h3>
       <a class="question_header__button" href="{% url 'main:create_question' %}">Ask Question</a>
     </div>
     <hr />
-    {{ question.content | safe }}
-    <p>{{ question.created_at }}</p>
-    <p>asked by {{ question.asked_by.get_full_name }}</p>
 
-    {% if user.is_authenticated and user == question.asked_by %}
-      <a href="{% url 'main:edit_question' question.id %}">Edit</a>
-      <a href="{% url 'main:delete_question' question.id %}">Delete</a>
-    {% endif %}
+    <div class="question_info">
+      <div class="question_votes">{{question.votes}}</div>
+      <div class="question_content">
+        {{ question.content | safe }}
+      </div>
+    </div>
+    
+    <div class="question_extra_info">
+      <div class="question_links">
+        {% if user.is_authenticated and user == question.asked_by %}
+          <a class="question_links__link" href="{% url 'main:edit_question' question.id %}">Edit</a>
+          <a class="question_links__link" href="{% url 'main:delete_question' question.id %}">Delete</a>
+        {% endif %}
+      </div>
+
+      <div class="question_timestamp">{{ question.created_at }}</div>
+
+      <div class="question_author">{{ question.asked_by.get_full_name }}</div>
+
+    </div>
   </div>
 
   {% if not answers %}
