@@ -24,7 +24,7 @@ class Question(models.Model):
 class Answer(models.Model):
     """
     This class is used to model answers given by users to particular question.
-    It has two foreign keys: 1. Question it belongs to 
+    It has two foreign keys: 1. Question it belongs to
                              2. User who wrote it.
     """
 
@@ -57,6 +57,11 @@ class QuestionVote(models.Model):
     users_upvoted = models.ManyToManyField(
         to=get_user_model(), related_name='upvotes', blank=True)
     votes = models.IntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        updated_votes = self.users_upvoted.count() - self.users_downvoted.count()
+        self.votes = updated_votes
+        super().save(*args, **kwargs)
 
     def __str__(self) -> str:
         return f'{self.question} votes: {self.votes}'
