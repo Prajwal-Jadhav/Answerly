@@ -188,6 +188,13 @@ def vote_question(request, question_id, action):
             pass
         else:
             question_vote.users_downvoted.add(request.user)
+    elif action == 'delete':
+        if request.user in upvoting_users:
+            question_vote.users_upvoted.remove(request.user)
+        elif request.user in downvoting_users:
+            question_vote.users_downvoted.remove(request.user)
+        else:
+            return JsonResponse({"message": "Cannot remove vote."})
 
     question_vote.save()
 
