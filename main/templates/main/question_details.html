@@ -19,17 +19,17 @@
       <div class="question_votes">
         <!-- Conditionally add classes to buttons depending on current user has voted or not -->
         {% if request.user in question.questionvote.users_upvoted.all %}
-          <button class="upvote_button user_voted user_upvoted" id="up">Up</button>
+          <button data-hasvoted="yes" class="upvote_button user_upvoted" id="up">Up</button>
         {% else %}
-          <button class="upvote_button" id="up">Up</button>
+          <button data-hasvoted="no" class="upvote_button" id="up">Up</button>
         {% endif %}
         
         {{question.questionvote.votes}}
 
         {% if request.user in question.questionvote.users_downvoted.all %}
-          <button class="downvote_button user_voted user_downvoted" id="down">Down</button>
+          <button data-hasvoted="yes" class="downvote_button user_downvoted" id="down">Down</button>
         {% else %}
-          <button class="downvote_button" id="down">Down</button>
+          <button data-hasvoted="no" class="downvote_button" id="down">Down</button>
         {% endif %}
         
       </div>
