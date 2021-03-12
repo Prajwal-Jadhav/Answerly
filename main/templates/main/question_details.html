@@ -24,8 +24,10 @@
           <button data-hasvoted="no" class="upvote_button" id="up">Up</button>
         {% endif %}
         
-        {{question.questionvote.votes}}
-
+        <div class="question_votes__count">
+          {{question.questionvote.votes}}
+        </div>
+        
         {% if request.user in question.questionvote.users_downvoted.all %}
           <button data-hasvoted="yes" class="downvote_button user_downvoted" id="down">Down</button>
         {% else %}
