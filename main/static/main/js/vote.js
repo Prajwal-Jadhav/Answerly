@@ -1,4 +1,5 @@
-const upvote_button = document.getElementById('up')
+const upvote_button = document.getElementById('up');
+const downvote_button = document.getElementById('down');
 
 data = JSON.stringify({})
 
@@ -13,4 +14,5 @@ function send_voting_request(event) {
   .catch(error => console.log(error))
 }
 
-upvote_button.addEventListener("click", send_voting_request, false)
+upvote_button.addEventListener("click", send_voting_request, false);
+downvote_button.addEventListener("click", send_voting_request, false);
