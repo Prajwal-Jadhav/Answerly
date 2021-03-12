@@ -4,6 +4,11 @@ const downvote_button = document.getElementById('down');
 data = JSON.stringify({})
 
 function send_voting_request(event) {
+  if (this.dataset.hasvoted == "yes") {
+    console.log("You have already voted on this question.");
+    return;
+  }
+
   fetch(`http://localhost:8000/questions/${question_id}/vote/${this.getAttribute('id')}`, {
     method: 'POST',
     headers: {
