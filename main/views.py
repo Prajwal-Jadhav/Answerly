@@ -8,6 +8,7 @@ from django.contrib import messages
 from .models import Answer, Question, QuestionVote
 from main.forms import AnswerCreationForm, QuestionCreationForm
 import markdown2
+import json
 
 
 def home(request):
@@ -168,7 +169,11 @@ def edit_answer(request, question_id, answer_id):
 
 @login_required
 def vote_question(request, question_id, action):
-    question_vote = QuestionVote.objects.get(question__id=question_id)
+    try:
+        question_vote = QuestionVote.objects.get(question__id=question_id)
+    except QuestionVote.DoesNotExist:
+        return JsonResponse({"success": False})
+
     upvoting_users = question_vote.users_upvoted.all()
     downvoting_users = question_vote.users_downvoted.all()
 
@@ -194,8 +199,8 @@ def vote_question(request, question_id, action):
         elif request.user in downvoting_users:
             question_vote.users_downvoted.remove(request.user)
         else:
-            return JsonResponse({"message": "Cannot remove vote."})
+            return JsonResponse({"success": False})
 
     question_vote.save()
 
-    return JsonResponse({"message": "Successfully voted"})
+    return JsonResponse({"success": True, "total_votes": question_vote.votes})
