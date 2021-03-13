@@ -19,11 +19,11 @@
       <div class="question_votes">
         <!-- Conditionally add classes to buttons depending on current user has voted or not -->
         {% if request.user in question.questionvote.users_upvoted.all %}
-          <svg data-hasvoted="yes" class="upvote_button user_upvoted" id="up" width="36" height="36" viewBox="0 0 36 36">
+          <svg data-hasvoted="yes" class="vote_button user_voted" id="up" width="36" height="36" viewBox="0 0 36 36">
             <path d="M2 26h32L18 10 2 26z"></path>
           </svg>
         {% else %}
-          <svg data-hasvoted="no" class="upvote_button" id="up" width="36" height="36" viewBox="0 0 36 36">
+          <svg data-hasvoted="no" class="vote_button" id="up" width="36" height="36" viewBox="0 0 36 36">
             <path d="M2 26h32L18 10 2 26z"></path>
           </svg>
         {% endif %}
@@ -33,11 +33,11 @@
         </div>
         
         {% if request.user in question.questionvote.users_downvoted.all %}
-          <svg data-hasvoted="yes" class="downvote_button user_downvoted" id="down" width="36" height="36" viewBox="0 0 36 36">
+          <svg data-hasvoted="yes" class="vote_button user_voted" id="down" width="36" height="36" viewBox="0 0 36 36">
             <path d="M2 10h32L18 26 2 10z"></path>
           </svg>
         {% else %}
-          <svg data-hasvoted="no" class="downvote_button" id="down" width="36" height="36" viewBox="0 0 36 36">
+          <svg data-hasvoted="no" class="vote_button" id="down" width="36" height="36" viewBox="0 0 36 36">
             <path d="M2 10h32L18 26 2 10z"></path>
           </svg>
         {% endif %}
