@@ -4,6 +4,7 @@
 
 {% block stylesheets %}
   <link rel="stylesheet" href="{% static 'main/css/question_details.css' %}">
+  <script src="https://kit.fontawesome.com/320ceecbe5.js" crossorigin="anonymous"></script>
 {% endblock stylesheets%}
 
 {% block content %}
@@ -19,13 +20,14 @@
       <div class="question_votes">
         <!-- Conditionally add classes to buttons depending on current user has voted or not -->
         {% if request.user in question.questionvote.users_upvoted.all %}
-          <svg data-hasvoted="yes" class="vote_button user_voted" id="up" width="36" height="36" viewBox="0 0 36 36">
-            <path d="M2 26h32L18 10 2 26z"></path>
-          </svg>
+          <span data-hasvoted="yes" class="vote_button user_voted" id="up">
+            <i class="fas fa-caret-up"></i>
+          </span>
+          
         {% else %}
-          <svg data-hasvoted="no" class="vote_button" id="up" width="36" height="36" viewBox="0 0 36 36">
-            <path d="M2 26h32L18 10 2 26z"></path>
-          </svg>
+          <span data-hasvoted="no" class="vote_button" id="up">
+            <i class="fas fa-caret-up"></i>        
+          </span>
         {% endif %}
         
         <div class="question_votes__count">
@@ -33,13 +35,13 @@
         </div>
         
         {% if request.user in question.questionvote.users_downvoted.all %}
-          <svg data-hasvoted="yes" class="vote_button user_voted" id="down" width="36" height="36" viewBox="0 0 36 36">
-            <path d="M2 10h32L18 26 2 10z"></path>
-          </svg>
+          <span data-hasvoted="yes" class="vote_button user_voted" id="down">
+            <i class="fas fa-caret-down" ></i>
+          </span>
         {% else %}
-          <svg data-hasvoted="no" class="vote_button" id="down" width="36" height="36" viewBox="0 0 36 36">
-            <path d="M2 10h32L18 26 2 10z"></path>
-          </svg>
+          <span data-hasvoted="no" class="vote_button" id="down">
+            <i class="fas fa-caret-down vote_button"></i>
+          </span> 
         {% endif %}
         
       </div>

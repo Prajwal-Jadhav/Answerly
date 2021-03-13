@@ -54,3 +54,16 @@
   color: rgb(159, 196, 252);
   align-self: center;
 }
+
+.vote_button {
+  color: rgb(202, 202, 202);
+  font-size: 60px;
+}
+
+.vote_button:hover {
+  cursor: pointer;
+}
+
+.vote_button.user_voted {
+  color: #124a7e;
+}
