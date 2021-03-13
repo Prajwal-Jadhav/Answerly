@@ -23,6 +23,27 @@ function send_voting_request(event) {
     }
   }
 
+  if (action == 'delete') {
+    this.classList.remove('user_voted');
+    this.dataset.hasvoted = 'no';
+
+  } else {
+    this.classList.add('user_voted');
+    this.dataset.hasvoted = 'yes';
+
+    if (this == upvote_button) {
+
+      downvote_button.dataset.hasvoted = 'no';
+      downvote_button.classList.remove('user_voted');
+
+    } else {
+      upvote_button.dataset.hasvoted = 'no';
+      upvote_button.classList.remove('user_voted');
+    }
+  }
+
+  console.log(action);
+
   fetch(`http://localhost:8000/questions/${question_id}/vote/${action}`, {
     method: 'POST',
     headers: {
@@ -30,9 +51,15 @@ function send_voting_request(event) {
     }
   })
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => {
+      if (data.success) {
+        question_votes_count.innerHTML = data.total_votes;
+      } else {
+        throw { "error": true };
+      }
+    })
     .catch(error => console.log(error));
 }
 
-upvote_button.addEventListener("click", send_voting_request, false);
-downvote_button.addEventListener("click", send_voting_request, false);
+upvote_button.addEventListener("click", send_voting_request);
+downvote_button.addEventListener("click", send_voting_request);
