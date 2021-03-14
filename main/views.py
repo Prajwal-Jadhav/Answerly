@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib import messages
 
-from .models import Answer, Question, QuestionVote
+from .models import Answer, Question, QuestionVote, AnswerVote
 from main.forms import AnswerCreationForm, QuestionCreationForm
 import markdown2
 import json
@@ -204,3 +204,42 @@ def vote_question(request, question_id, action):
     question_vote.save()
 
     return JsonResponse({"success": True, "total_votes": question_vote.votes})
+
+
+@login_required
+def vote_answer(request, answer_id, action):
+    try:
+        answer_vote = AnswerVote.objects.get(answer__id=answer_id)
+    except AnswerVote.DoesNotExist:
+        return JsonResponse({"success": False})
+
+    upvoting_users = answer_vote.users_upvoted.all()
+    downvoting_users = answer_vote.users_downvoted.all()
+
+    if action == 'up':
+        if request.user in upvoting_users:
+            pass
+        elif request.user in downvoting_users:
+            answer_vote.users_downvoted.remove(request.user)
+            answer_vote.users_upvoted.add(request.user)
+        else:
+            answer_vote.users_upvoted.add(request.user)
+    elif action == 'down':
+        if request.user in upvoting_users:
+            answer_vote.users_upvoted.remove(request.user)
+            answer_vote.users_downvoted.add(request.user)
+        elif request.user in downvoting_users:
+            pass
+        else:
+            answer_vote.users_downvoted.add(request.user)
+    elif action == 'delete':
+        if request.user in upvoting_users:
+            answer_vote.users_upvoted.remove(request.user)
+        elif request.user in downvoting_users:
+            answer_vote.users_downvoted.remove(request.user)
+        else:
+            return JsonResponse({"success": False})
+
+    answer_vote.save()
+
+    return JsonResponse({"success": True, "total_votes": answer_vote.votes})
