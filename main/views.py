@@ -79,6 +79,9 @@ def create_answer(request, question_id):
             answer.content_markdown = answer_content_in_markdown
 
             answer.save()
+
+            AnswerVote.objects.create(answer=answer)
+
             return redirect(reverse('main:question_details', args=[question_id]))
 
     return redirect(reverse('main:question_details', args=[question_id]))
