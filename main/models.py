@@ -81,9 +81,9 @@ class AnswerVote(models.Model):
 
     answer = models.OneToOneField(Answer, on_delete=models.CASCADE)
     users_downvoted = models.ManyToManyField(
-        to=get_user_model(), related_name='downvotes', blank=True)
+        to=get_user_model(), related_name='answer_downvotes', blank=True)
     users_upvoted = models.ManyToManyField(
-        to=get_user_model(), related_name='upvotes', blank=True)
+        to=get_user_model(), related_name='answer_upvotes', blank=True)
     votes = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
