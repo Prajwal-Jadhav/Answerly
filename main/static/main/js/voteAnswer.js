@@ -1,3 +1,22 @@
+function send_answer_voting_request(action, answer_id, vote_count_element) {
+  fetch(`${window.location.origin}/answers/${answer_id}/vote/${action}`, {
+    method: "POST",
+    headers: {
+      "X-CSRFToken": csrftoken
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        vote_count_element.innerHTML = data.total_votes;
+      }
+      else {
+        throw { "error": true };
+      }
+    })
+    .catch(error => console.log(error));
+}
+
 
 function handleAnswerVote(clicked_button, answer_id) {
   all_siblings = Array.from(clicked_button.parentNode.childNodes).filter(elem => elem.localName === 'div');
@@ -25,4 +44,6 @@ function handleAnswerVote(clicked_button, answer_id) {
     upvote_answer_button.classList.remove('user_voted');
     upvote_answer_button.dataset.action = 'up';
   }
+
+  send_answer_voting_request(action, answer_id, answer_vote_count);
 }
