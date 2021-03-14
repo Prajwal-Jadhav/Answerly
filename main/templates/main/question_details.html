@@ -65,22 +65,52 @@
     </div>
   </div>
 
-  {% if not answers %}
+  <div class="answers_container">
+    {% if not answers %}
       <p>There are no answers to this question yet. </p>
-  {% else %}
-    {% for answer in answers %}
-      <p> {{ answer.votes}} votes</p>
-      {{ answer.content | safe }}
-      <p> {{ answer.answered_by.get_full_name }} </p>
-      <small> {{answer.created_at }} </small>
+    {% else %}
+      {% for answer in answers %}
+        <div class="answer_votes">
+          <!-- Conditionally add classes to buttons depending on current user has voted or not -->
+          {% if request.user in answer.answervote.users_upvoted.all %}
+            <span data-hasvoted="yes" class="vote_button user_voted" id="up">
+              <i class="fas fa-caret-up"></i>
+            </span>
+            
+          {% else %}
+            <span data-hasvoted="no" class="vote_button" id="up">
+              <i class="fas fa-caret-up"></i>        
+            </span>
+          {% endif %}
+          
+          <div class="question_votes__count">
+            {{answer.answervote.votes}}
+          </div>
+          
+          {% if request.user in answer.answervote.users_downvoted.all %}
+            <span data-hasvoted="yes" class="vote_button user_voted" id="down">
+              <i class="fas fa-caret-down" ></i>
+            </span>
+          {% else %}
+            <span data-hasvoted="no" class="vote_button" id="down">
+              <i class="fas fa-caret-down"></i>
+            </span> 
+          {% endif %}
+          
+        </div>
 
-      {% if user.is_authenticated and user == answer.answered_by %}
-        <a href="{% url 'main:edit_answer' question.id answer.id %}">Edit</a>
-        <a href="{% url 'main:delete_answer' question.id answer.id %}">Delete</a>
-      {% endif %}
+        {{ answer.content | safe }}
+        <p> {{ answer.answered_by.get_full_name }} </p>
+        <small> {{answer.created_at }} </small>
 
-    {% endfor %}
-  {% endif%}
+        {% if user.is_authenticated and user == answer.answered_by %}
+          <a href="{% url 'main:edit_answer' question.id answer.id %}">Edit</a>
+          <a href="{% url 'main:delete_answer' question.id answer.id %}">Delete</a>
+        {% endif %}
+
+      {% endfor %}
+    {% endif%}
+  </div>
 
   <form action="{% url 'main:create_answer' question.id %}" method="POST">
     {% csrf_token %}
@@ -89,6 +119,7 @@
 
     <button class="btn btn-primary" type="submit">Submit answer</button>
   </form>
+  
 </div>
 {% endblock content %}
 
