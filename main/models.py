@@ -65,6 +65,8 @@ class QuestionVote(models.Model):
             self.users_downvoted.all().count()
         self.votes = updated_votes
 
+        super().save(*args, **kwargs)
+
     def __str__(self) -> str:
         return f'{self.question} votes: {self.votes}'
 
@@ -93,6 +95,8 @@ class AnswerVote(models.Model):
         updated_votes = self.users_upvoted.all().count() - \
             self.users_downvoted.all().count()
         self.votes = updated_votes
+
+        super().save(*args, **kwargs)
 
     def __str__(self) -> str:
         return f'{self.answer} votes: {self.votes}'
