@@ -66,3 +66,25 @@ class QuestionVote(models.Model):
 
     def __str__(self) -> str:
         return f'{self.question} votes: {self.votes}'
+
+
+class AnswerVote(models.Model):
+    """
+    This model is used to store the votes casted for a particular answer
+    by users.
+
+    A user can cast vote to multiple answer and an answer can have votes from
+    multiple users.
+
+    A particular AnswerVote instance and an answer have one-to-one relation.
+    """
+
+    answer = models.OneToOneField(Answer, on_delete=models.CASCADE)
+    users_downvoted = models.ManyToManyField(
+        to=get_user_model(), related_name='downvotes', blank=True)
+    users_upvoted = models.ManyToManyField(
+        to=get_user_model(), related_name='upvotes', blank=True)
+    votes = models.IntegerField(default=0)
+
+    def __str__(self) -> str:
+        return f'{self.answer} votes: {self.votes}'
