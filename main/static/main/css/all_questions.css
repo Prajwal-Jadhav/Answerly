@@ -66,3 +66,34 @@
 .question__time_and_author {
   align-self: flex-end;
 }
+
+.pagination_buttons_container {
+  display: flex;
+  justify-content: center;
+  margin-top: 45px;
+}
+
+.pagination_button {
+  display: inline-block;
+  padding: 8px 15px;
+  border: 1px solid gainsboro;
+  border-radius: 4px;
+  margin: 0px 8px;
+  color: black;
+}
+
+.pagination_button:hover {
+  text-decoration: none;
+  color: black;
+  background-color: gainsboro;
+}
+
+.current_pagination_button {
+  background-color: #124a7e;
+  color: white;
+}
+
+.current_pagination_button:hover {
+  background-color: #124a7e;
+  color: white;
+}
