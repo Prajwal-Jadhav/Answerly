@@ -20,12 +20,12 @@
       <div class="question_votes">
         <!-- Conditionally add classes to buttons depending on current user has voted or not -->
         {% if request.user in question.questionvote.users_upvoted.all %}
-          <div onclick="handleQuestionVote(this, '{{ question.id }}')" data-action="delete" class="vote_button user_voted" id="up">
+          <div onclick="handleQuestionVote(this, '{{ question.id }}')" data-action="delete" class="vote_button user_voted">
             <i class="fas fa-caret-up"></i>
           </div>
           
         {% else %}
-          <div onclick="handleQuestionVote(this, '{{ question.id }}')" data-action="up" class="vote_button" id="up">
+          <div onclick="handleQuestionVote(this, '{{ question.id }}')" data-action="up" class="vote_button">
             <i class="fas fa-caret-up"></i>        
           </div>
         {% endif %}
@@ -35,11 +35,11 @@
         </div>
         
         {% if request.user in question.questionvote.users_downvoted.all %}
-          <div onclick="handleQuestionVote(this, '{{ question.id }}')" data-action="delete" class="vote_button user_voted" id="down">
+          <div onclick="handleQuestionVote(this, '{{ question.id }}')" data-action="delete" class="vote_button user_voted">
             <i class="fas fa-caret-down" ></i>
           </div>
         {% else %}
-          <div onclick="handleQuestionVote(this, '{{ question.id }}')" data-action="down" class="vote_button" id="down">
+          <div onclick="handleQuestionVote(this, '{{ question.id }}')" data-action="down" class="vote_button">
             <i class="fas fa-caret-down"></i>
           </div> 
         {% endif %}
@@ -73,12 +73,11 @@
         <div class="answer_votes">
           <!-- Conditionally add classes to buttons depending on current user has voted or not -->
           {% if request.user in answer.answervote.users_upvoted.all %}
-            <div onclick="handleAnswerVote(this, '{{ answer.id }}')" data-action="delete" data-hasvoted="yes" class="vote_button user_voted">
+            <div onclick="handleAnswerVote(this, '{{ answer.id }}')" data-action="delete" class="vote_button user_voted">
               <i class="fas fa-caret-up"></i>
             </div>
-            
           {% else %}
-            <div onclick="handleAnswerVote(this, '{{ answer.id }}')" data-action="up" data-hasvoted="no" class="vote_button">
+            <div onclick="handleAnswerVote(this, '{{ answer.id }}')" data-action="up" class="vote_button">
               <i class="fas fa-caret-up"></i>        
             </div>
           {% endif %}
@@ -88,11 +87,11 @@
           </div>
           
           {% if request.user in answer.answervote.users_downvoted.all %}
-            <div onclick="handleAnswerVote(this, '{{ answer.id }}')" data-action="delete" data-hasvoted="yes" class="vote_button user_voted">
+            <div onclick="handleAnswerVote(this, '{{ answer.id }}')" data-action="delete" class="vote_button user_voted">
               <i class="fas fa-caret-down" ></i>
             </div>
           {% else %}
-            <div onclick="handleAnswerVote(this, '{{ answer.id }}')" data-action="down" data-hasvoted="no" class="vote_button">
+            <div onclick="handleAnswerVote(this, '{{ answer.id }}')" data-action="down" class="vote_button">
               <i class="fas fa-caret-down"></i>
             </div> 
           {% endif %}
@@ -127,7 +126,6 @@
 {% block javascript %}
   <script>
     var csrftoken = '{{ csrf_token }}';
-    var question_id = '{{ question.id }}'
   </script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
   <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
