@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 from .models import Answer, Question, QuestionVote, AnswerVote
 from main.forms import AnswerCreationForm, QuestionCreationForm
@@ -18,9 +19,13 @@ def home(request):
 
 
 def all_questions(request):
-    question_list = Question.objects.order_by('-created_at')[:10]
+    question_list = Question.objects.order_by('-created_at')
 
-    return render(request, 'main/all_questions.html', {'question_list': question_list})
+    paginator = Paginator(question_list, 2)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'main/all_questions.html', {'page_obj': page_obj})
 
 
 def question_details(request, question_id):
