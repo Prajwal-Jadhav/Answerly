@@ -1,5 +1,10 @@
 {% extends 'main/base.html' %}
 {% load humanize %}
+{% load static %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="{% static 'main/css/all_questions.css' %}">
+{% endblock stylesheets %}
 
 {% block content %}
 
