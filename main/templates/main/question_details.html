@@ -20,14 +20,14 @@
       <div class="question_votes">
         <!-- Conditionally add classes to buttons depending on current user has voted or not -->
         {% if request.user in question.questionvote.users_upvoted.all %}
-          <span data-hasvoted="yes" class="vote_button user_voted" id="up">
+          <div onclick="handleQuestionVote(this, '{{ question.id }}')" data-action="delete" class="vote_button user_voted" id="up">
             <i class="fas fa-caret-up"></i>
-          </span>
+          </div>
           
         {% else %}
-          <span data-hasvoted="no" class="vote_button" id="up">
+          <div onclick="handleQuestionVote(this, '{{ question.id }}')" data-action="up" class="vote_button" id="up">
             <i class="fas fa-caret-up"></i>        
-          </span>
+          </div>
         {% endif %}
         
         <div class="question_votes__count">
@@ -35,13 +35,13 @@
         </div>
         
         {% if request.user in question.questionvote.users_downvoted.all %}
-          <span data-hasvoted="yes" class="vote_button user_voted" id="down">
+          <div onclick="handleQuestionVote(this, '{{ question.id }}')" data-action="delete" class="vote_button user_voted" id="down">
             <i class="fas fa-caret-down" ></i>
-          </span>
+          </div>
         {% else %}
-          <span data-hasvoted="no" class="vote_button" id="down">
+          <div onclick="handleQuestionVote(this, '{{ question.id }}')" data-action="down" class="vote_button" id="down">
             <i class="fas fa-caret-down"></i>
-          </span> 
+          </div> 
         {% endif %}
         
       </div>
