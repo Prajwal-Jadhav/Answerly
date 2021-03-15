@@ -98,15 +98,24 @@
           
         </div>
 
-        {{ answer.content | safe }}
-        <p> {{ answer.answered_by.get_full_name }} </p>
-        <small> {{answer.created_at }} </small>
+        <div class="answer_content">
+          {{ answer.content | safe }}
+        </div>
+        
+        <div class="answer_extra_info">
+          <div class="answer_links">
+            {% if user.is_authenticated and user == answer.answered_by %}
+              <a href="{% url 'main:edit_answer' question.id answer.id %}">Edit</a>
+              <a href="{% url 'main:delete_answer' question.id answer.id %}">Delete</a>
+            {% endif %}
+          </div>
 
-        {% if user.is_authenticated and user == answer.answered_by %}
-          <a href="{% url 'main:edit_answer' question.id answer.id %}">Edit</a>
-          <a href="{% url 'main:delete_answer' question.id answer.id %}">Delete</a>
-        {% endif %}
+          <div class="answer_timestamp"> {{answer.created_at }} </div>
 
+          <div class="answer_author">{{ answer.answered_by.get_full_name }}</div>
+        </div>
+        
+        <hr />
       {% endfor %}
     {% endif%}
   </div>
