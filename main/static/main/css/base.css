@@ -1,3 +1,13 @@
+body {
+  background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url("../images/double-bubble-outline.png") repeat;
+}
+
+.body_block_content {
+  background-color: white;
+  display: table;
+  margin: 60px auto;
+}
+
 .message {
   max-width: 900px;
   margin: 0px auto;
