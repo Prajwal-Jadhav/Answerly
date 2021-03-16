@@ -58,63 +58,67 @@
         {% endif %}
       </div>
 
-      <div class="question_timestamp">{{ question.created_at }}</div>
+      <div class="question_timestamp">asked {{ question.created_at }}</div>
 
       <div class="question_author">{{ question.asked_by.get_full_name }}</div>
 
     </div>
   </div>
 
+  <h4 class="answer_count_header">{{ answers.all.count }} Answers</h4>
+
   <div class="answers_container">
     {% if not answers %}
       <p>There are no answers to this question yet. </p>
     {% else %}
       {% for answer in answers %}
-        <div class="answer_votes">
-          <!-- Conditionally add classes to buttons depending on current user has voted or not -->
-          {% if request.user in answer.answervote.users_upvoted.all %}
-            <div onclick="handleAnswerVote(this, '{{ answer.id }}')" data-action="delete" class="vote_button user_voted">
-              <i class="fas fa-caret-up"></i>
+        <div class="answer">
+          <div class="answer_info">
+            <div class="answer_votes">
+              <!-- Conditionally add classes to buttons depending on current user has voted or not -->
+              {% if request.user in answer.answervote.users_upvoted.all %}
+                <div onclick="handleAnswerVote(this, '{{ answer.id }}')" data-action="delete" class="vote_button user_voted">
+                  <i class="fas fa-caret-up"></i>
+                </div>
+              {% else %}
+                <div onclick="handleAnswerVote(this, '{{ answer.id }}')" data-action="up" class="vote_button">
+                  <i class="fas fa-caret-up"></i>        
+                </div>
+              {% endif %}
+              
+              <div class="answer_votes__count">
+                {{answer.answervote.votes}}
+              </div>
+              
+              {% if request.user in answer.answervote.users_downvoted.all %}
+                <div onclick="handleAnswerVote(this, '{{ answer.id }}')" data-action="delete" class="vote_button user_voted">
+                  <i class="fas fa-caret-down" ></i>
+                </div>
+              {% else %}
+                <div onclick="handleAnswerVote(this, '{{ answer.id }}')" data-action="down" class="vote_button">
+                  <i class="fas fa-caret-down"></i>
+                </div> 
+              {% endif %}
+              
             </div>
-          {% else %}
-            <div onclick="handleAnswerVote(this, '{{ answer.id }}')" data-action="up" class="vote_button">
-              <i class="fas fa-caret-up"></i>        
+
+            <div class="answer_content">
+              {{ answer.content | safe }}
             </div>
-          {% endif %}
-          
-          <div class="question_votes__count">
-            {{answer.answervote.votes}}
           </div>
-          
-          {% if request.user in answer.answervote.users_downvoted.all %}
-            <div onclick="handleAnswerVote(this, '{{ answer.id }}')" data-action="delete" class="vote_button user_voted">
-              <i class="fas fa-caret-down" ></i>
+          <div class="answer_extra_info">
+            <div class="answer_links">
+              {% if user.is_authenticated and user == answer.answered_by %}
+                <a class="answer_links__link" href="{% url 'main:edit_answer' question.id answer.id %}">Edit</a>
+                <a class="answer_links__link" href="{% url 'main:delete_answer' question.id answer.id %}">Delete</a>
+              {% endif %}
             </div>
-          {% else %}
-            <div onclick="handleAnswerVote(this, '{{ answer.id }}')" data-action="down" class="vote_button">
-              <i class="fas fa-caret-down"></i>
-            </div> 
-          {% endif %}
-          
-        </div>
 
-        <div class="answer_content">
-          {{ answer.content | safe }}
-        </div>
-        
-        <div class="answer_extra_info">
-          <div class="answer_links">
-            {% if user.is_authenticated and user == answer.answered_by %}
-              <a href="{% url 'main:edit_answer' question.id answer.id %}">Edit</a>
-              <a href="{% url 'main:delete_answer' question.id answer.id %}">Delete</a>
-            {% endif %}
+            <div class="answer_timestamp">answered {{answer.created_at }} </div>
+
+            <div class="answer_author">{{ answer.answered_by.get_full_name }}</div>
           </div>
-
-          <div class="answer_timestamp"> {{answer.created_at }} </div>
-
-          <div class="answer_author">{{ answer.answered_by.get_full_name }}</div>
-        </div>
-        
+        </div>  
         <hr />
       {% endfor %}
     {% endif%}
