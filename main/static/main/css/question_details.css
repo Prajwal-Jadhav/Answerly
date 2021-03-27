@@ -3,6 +3,7 @@
   margin: 75px auto;
   border: 1.5px solid gainsboro;
   padding: 30px 35px 25px 35px;
+  background-color: white; /* so that background image of body doesn't show up */
 }
 
 .question_header {
@@ -95,4 +96,8 @@
 
 .answer_info {
   display: flex;
+}
+
+form {
+  margin-top: 70px;
 }
