@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
-from ..main.models import Question
+from main.models import Question
 
 
 class QuestionComment(models.Model):
