@@ -9,8 +9,18 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = User
+
+    def group(self, user):
+        groups = []
+        for group in user.groups.all():
+            groups.append(group.name)
+
+        return ' '.join(groups)
+
+    group.short_description = 'Groups'
+
     list_display = ('email', 'first_name', 'last_name', 'PRN',
-                    'year', 'branch', 'division', 'is_staff', 'is_active', 'date_joined')
+                    'year', 'branch', 'division', 'is_staff', 'is_active', 'date_joined', 'group')
     list_filter = ('email', 'first_name', 'last_name', 'PRN', 'year', 'branch', 'division',
                    'is_staff', 'is_active')
 
