@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Group
 from .models import User
 
-from .forms import CustomUserChangeForm, CustomUserCreationForm
+from .forms import CustomUserChangeForm, CustomUserCreationForm, GroupAdminForm
 
 
 class CustomUserAdmin(UserAdmin):
@@ -42,4 +43,19 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
 
 
+# Create a new Group admin.
+class GroupAdmin(admin.ModelAdmin):
+    # Use our custom form.
+    form = GroupAdminForm
+    # Filter permissions horizontal as well.
+    filter_horizontal = ['permissions']
+
+
+# Unregister the original Group admin.
+admin.site.unregister(Group)
+
+
 admin.site.register(User, CustomUserAdmin)
+
+# Register the new Group ModelAdmin.
+admin.site.register(Group, GroupAdmin)
