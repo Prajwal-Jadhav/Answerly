@@ -63,6 +63,16 @@
       <div class="question_author">{{ question.asked_by.get_full_name }}</div>
 
     </div>
+
+    <div class="question_comments">
+      {% if question.questioncomment_set.all %}
+        {% for comment in question.questioncomment_set.all %}
+          <div class="question_comment">{{ comment.content }}</div>
+        {% endfor %}
+      {% else %}
+        <p>There are no comments for this question. </p>
+      {% endif %}
+    </div>
   </div>
 
   <h4 class="answer_count_header">{{ answers.all.count }} Answers</h4>
