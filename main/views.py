@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 
 from .models import Answer, Question, QuestionVote, AnswerVote
 from main.forms import AnswerCreationForm, QuestionCreationForm
+from comments.forms import QuestionCommentForm
 import markdown2
 import json
 
@@ -32,9 +33,10 @@ def question_details(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     answers = question.answer_set.all()
 
-    form = AnswerCreationForm()
+    answer_creation_form = AnswerCreationForm()
+    question_comment_form = QuestionCommentForm()
 
-    return render(request, 'main/question_details.html', {'question': question, 'answers': answers, 'form': form})
+    return render(request, 'main/question_details.html', {'question': question, 'answers': answers, 'answer_creation_form': answer_creation_form, 'question_comment_form': question_comment_form})
 
 
 @login_required
