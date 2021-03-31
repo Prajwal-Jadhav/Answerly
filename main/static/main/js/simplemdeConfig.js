@@ -1,5 +1,5 @@
-let simplemde = new SimpleMDE({ element: document.querySelector("#id_content") });
-let textarea = document.querySelector("#id_content");
+let simplemde = new SimpleMDE({ element: document.querySelector(".simplemde_form textarea") });
+let textarea = document.querySelector(".simplemde_form textarea");
 
 
 simplemde.codemirror.on("change", function () {
