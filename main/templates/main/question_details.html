@@ -73,7 +73,7 @@
         <p>There are no comments for this question. </p>
       {% endif %}
       <div class="question_comment_form__container">
-        <form class="question_comment_form" action="#" method="POST">
+        <form class="question_comment_form" action="{% url 'comments:create_question_comment' question.id %}" method="POST">
           {% csrf_token %}
 
           {{ question_comment_form | crispy }}
