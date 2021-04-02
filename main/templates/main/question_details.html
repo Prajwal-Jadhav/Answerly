@@ -67,7 +67,14 @@
     <div class="question_comments">
       {% if question.questioncomment_set.all %}
         {% for comment in question.questioncomment_set.all %}
-          <div class="question_comment">{{ comment.content }}</div>
+          <div class="question_comment">
+            <div class="question_comment--text">
+              {{ comment.content }}
+            </div>
+            {% if comment.author == request.user %}
+              <a href="{% url 'comments:delete_question_comment' comment.id %}" class="question_comment--delete">Delete</a>
+            {% endif %}
+          </div>
         {% endfor %}
       {% else %}
         <p>There are no comments for this question. </p>
