@@ -6,5 +6,7 @@ app_name = 'comments'
 
 urlpatterns = [
     path('question/<int:question_id>/create',
-         views.create_question_comment, name='create_question_comment')
+         views.create_question_comment, name='create_question_comment'),
+    path('<int:comment_id>/delete', views.delete_question_comment,
+         name='delete_question_comment')
 ]
