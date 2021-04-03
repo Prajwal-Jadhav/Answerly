@@ -1,5 +1,4 @@
-from django.contrib.auth import login
-from django.http.response import Http404, HttpResponseRedirect, JsonResponse
+from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -10,7 +9,6 @@ from .models import Answer, Question, QuestionVote, AnswerVote
 from main.forms import AnswerCreationForm, QuestionCreationForm
 from comments.forms import QuestionCommentForm
 import markdown2
-import json
 
 
 def home(request):
