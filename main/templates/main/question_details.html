@@ -63,6 +63,32 @@
       <div class="question_author">{{ question.asked_by.get_full_name }}</div>
 
     </div>
+
+    <div class="question_comments">
+      {% if question.questioncomment_set.all %}
+        {% for comment in question.questioncomment_set.all %}
+          <div class="question_comment">
+            <div class="question_comment--text">
+              {{ comment.content }}
+            </div>
+            {% if comment.author == request.user %}
+              <a href="{% url 'comments:delete_question_comment' comment.id %}" class="question_comment--delete">Delete</a>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>There are no comments for this question. </p>
+      {% endif %}
+      <div class="question_comment_form__container">
+        <form class="question_comment_form" action="{% url 'comments:create_question_comment' question.id %}" method="POST">
+          {% csrf_token %}
+
+          {{ question_comment_form | crispy }}
+
+          <button class="btn btn-primary" type="submit">Submit Comment</button>
+        </form>
+      </div>
+    </div>
   </div>
 
   <h4 class="answer_count_header">{{ answers.all.count }} Answers</h4>
@@ -124,13 +150,15 @@
     {% endif%}
   </div>
 
-  <form action="{% url 'main:create_answer' question.id %}" method="POST">
-    {% csrf_token %}
-
-    {{ form | crispy }}
-
-    <button class="btn btn-primary" type="submit">Submit answer</button>
-  </form>
+  <div class="answer_form__container">
+    <form class="answer_form simplemde_form" action="{% url 'main:create_answer' question.id %}" method="POST">
+      {% csrf_token %}
+  
+      {{ answer_creation_form | crispy }}
+  
+      <button class="btn btn-primary" type="submit">Submit answer</button>
+    </form>
+  </div>
   
 </div>
 {% endblock content %}

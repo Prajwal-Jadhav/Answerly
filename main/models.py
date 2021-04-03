@@ -59,11 +59,13 @@ class QuestionVote(models.Model):
     votes = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        updated_votes = self.users_upvoted.all().count() - \
-            self.users_downvoted.all().count()
-        self.votes = updated_votes
+        # A model should have been saved (it should have id) before accessing its
+        # many-to-many fields. Below written condition will be false when object is being
+        # saved for the first time. But it will run each time we update this model
+        if self.id:
+            updated_votes = self.users_upvoted.all().count() - \
+                self.users_downvoted.all().count()
+            self.votes = updated_votes
 
         super().save(*args, **kwargs)
 
@@ -90,11 +92,13 @@ class AnswerVote(models.Model):
     votes = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        updated_votes = self.users_upvoted.all().count() - \
-            self.users_downvoted.all().count()
-        self.votes = updated_votes
+        # A model should have been saved (it should have id) before accessing its
+        # many-to-many fields. Below written condition will be false when object is being
+        # saved for the first time. But it will run each time we update this model
+        if self.id:
+            updated_votes = self.users_upvoted.all().count() - \
+                self.users_downvoted.all().count()
+            self.votes = updated_votes
 
         super().save(*args, **kwargs)
 
