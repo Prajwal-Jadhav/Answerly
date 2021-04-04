@@ -59,7 +59,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'main',
-    'comments'
+    'comments',
+    'moderation'
 ]
 
 MIDDLEWARE = [
