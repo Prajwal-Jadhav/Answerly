@@ -132,10 +132,15 @@ class Report(models.Model):
         abstract = True
 
 
-class QuestionReport(models.Model):
-    """ This is a model that stores the info about the reports filed by a user
-        when the user finds a question explicit/harmful
-    """
+class QuestionRepor(Report):
+    """ Model to store info about harmful/explicit questions """
 
     # which question was flagged
     question = models.OneToOneField(Question, on_delete=models.CASCADE)
+
+
+class AnswerReport(Report):
+    """ Model to store info about harmful/explicit answer """
+
+    # which question was flagged
+    answer = models.OneToOneField(Answer, on_delete=models.CASCADE)
