@@ -132,7 +132,7 @@ class Report(models.Model):
         abstract = True
 
 
-class QuestionRepor(Report):
+class QuestionReport(Report):
     """ Model to store info about harmful/explicit questions """
 
     # which question was flagged
