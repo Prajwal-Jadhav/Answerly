@@ -51,8 +51,6 @@ def create_question(request):
 
             question.save()
 
-            QuestionVote.objects.create(question=question)
-
             return redirect(reverse('main:question_details', args=[question.id]))
     else:
         form = QuestionCreationForm()
@@ -84,8 +82,6 @@ def create_answer(request, question_id):
             answer.content_markdown = answer_content_in_markdown
 
             answer.save()
-
-            AnswerVote.objects.create(answer=answer)
 
             return redirect(reverse('main:question_details', args=[question_id]))
 

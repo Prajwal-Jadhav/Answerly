@@ -21,6 +21,10 @@ class Question(models.Model):
     def __str__(self) -> str:
         return self.title[:60]
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        QuestionVote.objects.create(question=self)
+
 
 class Answer(models.Model):
     """
@@ -39,6 +43,10 @@ class Answer(models.Model):
 
     def __str__(self) -> str:
         return self.content[:60]
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        AnswerVote.objects.create(answer=self)
 
 
 class QuestionVote(models.Model):
@@ -108,7 +116,8 @@ class AnswerVote(models.Model):
 
 
 class Report(models.Model):
-    """ This is a base class from which all classes that are used for reporting a question/answer/comment are derived. \n
+    """ This is a base class from which all classes that are used for reporting a question/answer/comment are derived.
+
     It provides fields common to all such as 'number_of_reports' and 'reporter' """
 
     # how many times this question has been flagged
