@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+from django.conf import settings
 
 
 class Question(models.Model):
@@ -104,3 +105,28 @@ class AnswerVote(models.Model):
 
     def __str__(self) -> str:
         return f'{self.answer} votes: {self.votes}'
+
+
+class Report(models.Model):
+    """ This is a base class from which all classes that are used for reporting a question/answer/comment are derived. \n
+    It provides fields common to all such as 'number_of_reports' and 'reporter' """
+
+    # how many times this question has been flagged
+    number_of_reports = models.IntegerField(default=0)
+
+    # who has flagged this question
+    reporter = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, null=True, blank=True)
+
+    # required so that django doesn't create table for this class
+    class Meta:
+        abstract = True
+
+
+class QuestionReport(models.Model):
+    """ This is a model that stores the info about the reports filed by a user
+        when the user finds a question explicit/harmful
+    """
+
+    # which question was flagged
+    question = models.OneToOneField(Question, on_delete=models.CASCADE)
