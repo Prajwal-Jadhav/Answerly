@@ -24,6 +24,7 @@ class Question(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         QuestionVote.objects.create(question=self)
+        QuestionReport.objects.create(question=self)
 
 
 class Answer(models.Model):
@@ -47,6 +48,7 @@ class Answer(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         AnswerVote.objects.create(answer=self)
+        AnswerReport.objects.create(answer=self)
 
 
 class QuestionVote(models.Model):
