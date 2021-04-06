@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
 
@@ -16,4 +17,4 @@ def is_moderator(user):
 @login_required
 @user_passes_test(is_moderator)
 def moderation_home(request):
-    return HttpResponse('this is moderation response')
+    return render(request, 'moderation/moderation_home.html')
