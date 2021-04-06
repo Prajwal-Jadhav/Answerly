@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.contrib import messages
 from django.core.paginator import Paginator
 
-from .models import Answer, Question, QuestionVote, AnswerVote
+from .models import Answer, Question, QuestionVote, AnswerVote, QuestionReport, AnswerReport
 from main.forms import AnswerCreationForm, QuestionCreationForm
 from comments.forms import QuestionCommentForm
 import markdown2
@@ -247,3 +247,22 @@ def vote_answer(request, answer_id, action):
     answer_vote.save()
 
     return JsonResponse({"success": True, "total_votes": answer_vote.votes})
+
+
+@login_required
+def report_question(request, question_id):
+    """ This view is used to report a question that a user finds harmful/explicit """
+
+    question_report = get_object_or_404(
+        QuestionReport, question__id=question_id)
+
+    if request.user not in question_report.reporter.all():
+        question_report.reporter.add(request.user)
+        question_report.number_of_reports += 1
+        question_report.save()
+        messages.success(
+            request, "Thank you for reporting this question. Our moderation team will take a look at it and if it violates the site's guidelines it will be removed.")
+    else:
+        messages.error(request, "You have already reported this question.")
+
+    return redirect(reverse('main:question_details', args=[question_id]))

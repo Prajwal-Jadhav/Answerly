@@ -56,6 +56,7 @@
           <a class="question_links__link" href="{% url 'main:edit_question' question.id %}">Edit</a>
           <a class="question_links__link" href="{% url 'main:delete_question' question.id %}">Delete</a>
         {% endif %}
+          <a class="question_links__link" href="{% url 'main:report_question' question.id %}">Report</a>
       </div>
 
       <div class="question_timestamp">asked {{ question.created_at }}</div>
