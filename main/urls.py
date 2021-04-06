@@ -26,4 +26,6 @@ urlpatterns = [
     path('questions/new', views.create_question, name='create_question'),
     path('answers/<int:answer_id>/vote/<str:action>',
          views.vote_answer, name='vote_answer'),
+    path('answers/<int:answer_id>/report',
+         views.report_answer, name='report_answer')
 ]
