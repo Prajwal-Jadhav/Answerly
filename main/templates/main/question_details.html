@@ -139,6 +139,7 @@
                 <a class="answer_links__link" href="{% url 'main:edit_answer' question.id answer.id %}">Edit</a>
                 <a class="answer_links__link" href="{% url 'main:delete_answer' question.id answer.id %}">Delete</a>
               {% endif %}
+                <a class="answer_links__link" href="{% url 'main:report_answer' answer.id %}">Report</a>
             </div>
 
             <div class="answer_timestamp">answered {{answer.created_at }} </div>

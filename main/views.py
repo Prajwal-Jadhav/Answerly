@@ -266,3 +266,21 @@ def report_question(request, question_id):
         messages.error(request, "You have already reported this question.")
 
     return redirect(reverse('main:question_details', args=[question_id]))
+
+
+@login_required
+def report_answer(request, answer_id: int):
+    """ This view is used to report a answer that a user finds harmful/explicit """
+
+    answer_report = get_object_or_404(AnswerReport, answer__id=answer_id)
+
+    if request.user not in answer_report.reporter.all():
+        answer_report.reporter.add(request.user)
+        answer_report.number_of_reports += 1
+        answer_report.save()
+        messages.success(
+            request, "Thank you for reporting this answer. Our moderation team will take a look at it and if it violates the site's guidelines it will be removed.")
+    else:
+        messages.error(request, "You have already reported this answer.")
+
+    return redirect(reverse('main:question_details', args=[answer_report.answer.question.id]))
