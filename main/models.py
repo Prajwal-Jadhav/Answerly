@@ -21,10 +21,16 @@ class Question(models.Model):
     def __str__(self) -> str:
         return self.title[:60]
 
+    def save_model(self, first_time=True):
+        return super(Question, self).save()
+
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        QuestionVote.objects.create(question=self)
-        QuestionReport.objects.create(question=self)
+        if self.id:
+            super(Question, self).save(*args, **kwargs)
+        else:
+            super().save(*args, **kwargs)
+            QuestionVote.objects.create(question=self)
+            QuestionReport.objects.create(question=self)
 
 
 class Answer(models.Model):
@@ -46,9 +52,15 @@ class Answer(models.Model):
         return self.content[:60]
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        AnswerVote.objects.create(answer=self)
-        AnswerReport.objects.create(answer=self)
+        if self.id:
+            super(Answer, self).save(*args, **kwargs)
+        else:
+            super(Answer, self).save(*args, **kwargs)
+            AnswerVote.objects.create(answer=self)
+            AnswerReport.objects.create(answer=self)
+
+    def save_model(self, first_time=True):
+        return super(Question, self).save()
 
 
 class QuestionVote(models.Model):
@@ -127,7 +139,7 @@ class Report(models.Model):
 
     # who has flagged this question
     reporter = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, null=True, blank=True)
+        settings.AUTH_USER_MODEL, blank=True)
 
     # required so that django doesn't create table for this class
     class Meta:

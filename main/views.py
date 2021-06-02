@@ -20,7 +20,7 @@ def home(request):
 def all_questions(request):
     question_list = Question.objects.order_by('-created_at')
 
-    paginator = Paginator(question_list, 15)
+    paginator = Paginator(question_list, 2)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
