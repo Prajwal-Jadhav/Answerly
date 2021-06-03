@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+  <div style="width: 800px; margin: auto;" class="d-flex flex-column mt-5">
+    {% for report in reported_question_list %}
+      <div class="p-4 h4">
+        <a href="{% url 'main:question_details' report.question.id %}">{{ report.question }} -- reports: {{ report.number_of_reports }} </a>
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock content %}
