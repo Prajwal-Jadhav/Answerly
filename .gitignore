@@ -19,3 +19,4 @@ tests/report/
 .vscode
 db.sqlite3
 .env
+venv/
